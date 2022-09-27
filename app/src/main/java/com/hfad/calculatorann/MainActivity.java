@@ -142,8 +142,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                 }
-
-
                 if((Button) findViewById(R.id.buttonSix) == buttons[i] )
                 {
                     buttons[i].setOnClickListener(new View.OnClickListener() {
@@ -253,17 +251,15 @@ public class MainActivity extends AppCompatActivity {
 
                 if((Button) findViewById(R.id.buttonPlus) == buttons[i] )
                 {
-
                     buttons[i].setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
-
                             if(!tvTotal.getText().toString().isEmpty())
                             {
                                 nums.add(Double.parseDouble(tvTotal.getText().toString()));
                                 size[0] = nums.size();
                                 tvTotal.setText(addition(nums));
+                                System.out.println(nums.size());
                                 System.out.println(nums);
                                // System.out.println(nums.get((nums.size() + 1)).toString().isEmpty());
                             }
@@ -287,17 +283,44 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                 }
-
-                if((Button) findViewById(R.id.buttonMultiplication) == buttons[i] )
+                if((Button) findViewById(R.id.buttonDivision) == buttons[i] )
                 {
 
-                    System.out.println("ok");
                     buttons[i].setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
 
 
 
+                            if(!tvTotal.getText().toString().isEmpty())
+                            {
+                                if (nums.isEmpty())
+                                {
+                                    nums.add(Double.parseDouble(tvTotal.getText().toString()) * Double.parseDouble(tvTotal.getText().toString()));
+                                }
+                                nums.add(Double.parseDouble(tvTotal.getText().toString()));
+                                size[0] = nums.size();
+                                tvTotal.setText(division(nums));
+                                System.out.println(nums);
+                                System.out.println("divison");
+                                // System.out.println(nums.get((nums.size() + 1)).toString().isEmpty());
+                            }
+                            else
+                                tvTotal.setText("");
+
+                        }
+                    });
+                }
+                if((Button) findViewById(R.id.buttonMultiplication) == buttons[i] )
+                {
+
+                    buttons[i].setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (nums.isEmpty())
+                            {
+                                nums.add(1.0);
+                            }
                             if(!tvTotal.getText().toString().isEmpty())
                             {
                                 nums.add(Double.parseDouble(tvTotal.getText().toString()));
@@ -311,69 +334,45 @@ public class MainActivity extends AppCompatActivity {
 
                         }
                     });
-                }
 
-                if((Button) findViewById(R.id.buttonDivision) == buttons[i] )
-                {
-
-                    buttons[i].setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-
-
-
-                            if(!tvTotal.getText().toString().isEmpty())
-                            {
-                                nums.add(Double.parseDouble(tvTotal.getText().toString()));
-                                size[0] = nums.size();
-                                tvTotal.setText(division(nums));
-                                System.out.println(nums);
-                                // System.out.println(nums.get((nums.size() + 1)).toString().isEmpty());
-                            }
-                            else
-                                tvTotal.setText("");
-
-                        }
-                    });
                 }
             }
     }
 
 
+
     public String addition( ArrayList<Double> num)
     {
+        /*
             double total = 0;
             for (int i = 0; i < num.size(); i++) {
                 total+= num.get(i);
             }
             return Double.toString(total);
+*/
+        return Double.toString(num.get(num.size()-2) + num.get(num.size() -1));
     }
 
     public String subtraction( ArrayList<Double> num)
     {
+        /*
         double total = 0;
         for (int i = 0; i < num.size(); i++) {
             total-= num.get(i);
         }
         return Double.toString(total);
+        */
+        return Double.toString(num.get(num.size()-2) - num.get(num.size() -1));
     }
 
     public String multiplication( ArrayList<Double> num)
     {
-        double total = 0;
-        for (int i = 0; i < num.size(); i++) {
-            total*= num.get(i);
-        }
-        return Double.toString(total);
+        return Double.toString(num.get(num.size()-2) * num.get(num.size() -1));
     }
 
     public String division( ArrayList<Double> num)
     {
-        double total = 0;
-        for (int i = 0; i < num.size(); i++) {
-            total/= num.get(i) * 1.0;
-        }
-        return Double.toString(total);
+        return Double.toString(num.get(num.size()-2) / num.get(num.size() -1));
     }
 
 

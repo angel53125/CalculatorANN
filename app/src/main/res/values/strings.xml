@@ -12,9 +12,9 @@
     <string name="nine">9</string>
     <string name="plus">+</string>
     <string name="minus">-</string>
-    <string name="division">x</string>
+    <string name="division">/</string>
     <string name="percent">%</string>
-    <string name="Multiplication">/</string>
+    <string name="Multiplication">x</string>
     <string name="negPos">+/-</string>
     <string name="decimal">.</string>
     <string name="equal">=</string>
