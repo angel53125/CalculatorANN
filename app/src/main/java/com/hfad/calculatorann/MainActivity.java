@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         Button btn8 = (Button) findViewById(R.id.buttonEight);
         Button btn9 = (Button) findViewById(R.id.buttonNine);
         Button btnPlus = (Button) findViewById(R.id.buttonPlus);
+        Button btnPlusNeg = (Button) findViewById(R.id.buttonPlusNeg);
         Button btnMinus= (Button) findViewById(R.id.buttonMinus);
         Button btnClear = (Button) findViewById(R.id.buttonClear);
         Button btnMultiply = (Button) findViewById(R.id.buttonMultiplication);
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         TextView tvTotal = (TextView) findViewById(R.id.textView);
 
         Button[] buttons = {btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9,
-                            btnMinus,btnPlus,btnClear,btnMultiply,btnDivision,btnPercent,btnEquals};
+                            btnMinus,btnPlus,btnClear,btnMultiply,btnDivision,btnPercent,btnEquals,btnPlusNeg};
         ArrayList<Double> nums = new ArrayList<Double>();
         final boolean isClear = true;
         final int[] size = {0};
@@ -235,6 +236,10 @@ public class MainActivity extends AppCompatActivity {
                     buttons[i].setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            if (nums.isEmpty())
+                            {
+                                nums.add(0.0);
+                            }
                             if(!tvTotal.getText().toString().isEmpty())
                             {
                                 nums.add(Double.parseDouble(tvTotal.getText().toString()));
@@ -254,6 +259,10 @@ public class MainActivity extends AppCompatActivity {
                     buttons[i].setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
+                            if (nums.isEmpty())
+                            {
+                                nums.add(0.0);
+                            }
                             if(!tvTotal.getText().toString().isEmpty())
                             {
                                 nums.add(Double.parseDouble(tvTotal.getText().toString()));
@@ -336,21 +345,90 @@ public class MainActivity extends AppCompatActivity {
                     });
 
                 }
+
+                if((Button) findViewById(R.id.buttonPlusNeg) == buttons[i] )
+                {
+
+                    buttons[i].setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                                if (!tvTotal.getText().toString().isEmpty() && tvTotal.getText().toString() != "0") {
+
+                                    if(nums.isEmpty())
+                                    {
+                                        nums.add(Double.parseDouble(tvTotal.getText().toString()));
+                                    }
+                                    tvTotal.setText(Double.toString(Double.parseDouble(tvTotal.getText().toString()) * -1));
+                                    System.out.println(nums);
+                                    // System.out.println(nums.get((nums.size() + 1)).toString().isEmpty());
+                                } else
+                                    tvTotal.setText("");
+
+                                nums.set(nums.size()-1,Double.parseDouble(tvTotal.getText().toString()) * -1);
+                        }
+                    });
+                }
+
+                if((Button) findViewById(R.id.buttonPercent) == buttons[i] )
+                {
+
+                    buttons[i].setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (nums.isEmpty())
+                            {
+                                nums.add(1.0);
+                            }
+                            if(!tvTotal.getText().toString().isEmpty())
+                            {
+                                nums.add(Double.parseDouble(tvTotal.getText().toString()));
+                                size[0] = nums.size();
+                                tvTotal.setText(percentage(nums));
+                                System.out.println(nums);
+                                // System.out.println(nums.get((nums.size() + 1)).toString().isEmpty());
+                            }
+                            else
+                                tvTotal.setText("");
+
+                        }
+                    });
+
+                }
+
+                if((Button) findViewById(R.id.buttonEqual) == buttons[i] )
+                {
+
+                    buttons[i].setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if(!tvTotal.getText().toString().isEmpty())
+                            {
+                                nums.add(Double.parseDouble(tvTotal.getText().toString()));
+                                size[0] = nums.size();
+                                tvTotal.setText(percentage(nums));
+                                System.out.println(nums);
+                                // System.out.println(nums.get((nums.size() + 1)).toString().isEmpty());
+                            }
+                            else
+                                tvTotal.setText("");
+
+                        }
+                    });
+
+                }
             }
     }
 
-
-
     public String addition( ArrayList<Double> num)
     {
-        /*
+
             double total = 0;
             for (int i = 0; i < num.size(); i++) {
                 total+= num.get(i);
             }
             return Double.toString(total);
-*/
-        return Double.toString(num.get(num.size()-2) + num.get(num.size() -1));
+
     }
 
     public String subtraction( ArrayList<Double> num)
@@ -375,5 +453,9 @@ public class MainActivity extends AppCompatActivity {
         return Double.toString(num.get(num.size()-2) / num.get(num.size() -1));
     }
 
+    public String percentage( ArrayList<Double> num)
+    {
+        return Double.toString(num.get(num.size()-1) / 100.0);
+    }
 
 }
