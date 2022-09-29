@@ -10,6 +10,7 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
         Button[] buttons = {btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9,
                             btnMinus,btnPlus,btnClear,btnMultiply,btnDivision,btnPercent,btnEquals,btnPlusNeg};
         ArrayList<Double> nums = new ArrayList<Double>();
+        ArrayList<String> operations = new ArrayList<String>();
+        List<List> listOfMixedTypes = new ArrayList<List>();
+        ArrayList<String> combineLists = new ArrayList<String>();
         final boolean isClear = true;
         final int[] size = {0};
 
@@ -246,6 +250,7 @@ public class MainActivity extends AppCompatActivity {
                                 size[0] = nums.size();
                                 tvTotal.setText(subtraction(nums));
                                 System.out.println(nums);
+                                operations.add("-");
                                 // System.out.println(nums.get((nums.size() + 1)).toString().isEmpty());
                             }
                             else
@@ -270,6 +275,7 @@ public class MainActivity extends AppCompatActivity {
                                 tvTotal.setText(addition(nums));
                                 System.out.println(nums.size());
                                 System.out.println(nums);
+                                operations.add("+");
                                // System.out.println(nums.get((nums.size() + 1)).toString().isEmpty());
                             }
                             else
@@ -312,6 +318,7 @@ public class MainActivity extends AppCompatActivity {
                                 tvTotal.setText(division(nums));
                                 System.out.println(nums);
                                 System.out.println("divison");
+                                operations.add("/");
                                 // System.out.println(nums.get((nums.size() + 1)).toString().isEmpty());
                             }
                             else
@@ -336,6 +343,7 @@ public class MainActivity extends AppCompatActivity {
                                 size[0] = nums.size();
                                 tvTotal.setText(multiplication(nums));
                                 System.out.println(nums);
+                                operations.add("X");
                                 // System.out.println(nums.get((nums.size() + 1)).toString().isEmpty());
                             }
                             else
@@ -406,8 +414,37 @@ public class MainActivity extends AppCompatActivity {
                             {
                                 nums.add(Double.parseDouble(tvTotal.getText().toString()));
                                 size[0] = nums.size();
-                                tvTotal.setText(percentage(nums));
+
+                                for(int i = 1; i < nums.size();i++)
+                                {
+                                    System.out.println("Index:" + operations.indexOf("*"));
+                                    System.out.println("List loop" + combineLists);
+
+                                    if(nums.size() % 5 == 0) {
+                                        //combineLists.add("(");
+                                    }
+                                    combineLists.add(Double.toString(nums.get(i)));
+                                    if(i <= operations.size())
+                                    {
+                                        combineLists.add(operations.get(i - 1));
+                                    }
+                                    System.out.println("STart "+ i + ": "+ combineLists.size());
+                                    if(combineLists.size() % 5  == 0 && combineLists.size() > 5)
+                                    {
+                                       // combineLists.add(")");
+                                    }
+
+                                }
+                                System.out.println("Result List" + combineLists);
+                                tvTotal.setText(results(combineLists,nums));
                                 System.out.println(nums);
+                                System.out.println(nums.get(operations.size()));
+                                System.out.println(nums.get(operations.size() -1));
+                                System.out.println(nums.get(operations.size() +1));
+                                System.out.println(operations);
+                                operations.clear();
+                                combineLists.clear();
+
                                 // System.out.println(nums.get((nums.size() + 1)).toString().isEmpty());
                             }
                             else
@@ -458,4 +495,102 @@ public class MainActivity extends AppCompatActivity {
         return Double.toString(num.get(num.size()-1) / 100.0);
     }
 
+    public String results(ArrayList<String> ops, ArrayList<Double> num)
+    {
+
+        /*
+        if (ops.contains("X"))
+        {
+            return Double.toString(num.get(ops.indexOf("X")+1) * num.get(ops.indexOf("X") + 2));
+        }
+        else if (ops.contains("/"))
+        {
+
+            return Double.toString(num.get(ops.size()) / num.get(ops.size() + 1));
+        }
+        else if (ops.contains("+"))
+        {
+
+            return Double.toString(num.get(ops.size()) + num.get(ops.size() + 1));
+        }
+        else
+        {
+
+            return Double.toString(num.get(ops.size()) - num.get(ops.size() + 1));
+        }
+
+*/
+        ArrayList<Double> temp = new ArrayList<Double>();
+        double total = 0;
+        if(ops.contains("X")) {
+            for (int i = 0; i < ops.size(); i++) {
+                if (ops.get(i).charAt(0) == 'X') {
+                    System.out.println("location" + i);
+                    if (total == 0) {
+                        total = Double.parseDouble(ops.get(i - 1)) * Double.parseDouble(ops.get(i + 1));
+                    } else
+                        total = total * Double.parseDouble(ops.get(i + 1));
+                    System.out.println("Total after multiplication" + total);
+                }
+
+            }
+        }
+        if(ops.contains("+"))
+        {
+            for (int i = 0; i < ops.size(); i++) {
+                if (ops.get(i).charAt(0) == '+') {
+                    System.out.println("location" + i);
+                    if (total == 0) {
+                        total = Double.parseDouble(ops.get(i - 1)) + Double.parseDouble(ops.get(i + 1));
+                    } else
+                        total = total + Double.parseDouble(ops.get(i + 1));
+                    System.out.println(ops.get(i + 1));
+                    System.out.println("After addition" + total);
+                }
+
+            }
+        }
+        if(ops.contains("-"))
+        {
+            for (int i = 0; i < ops.size(); i++) {
+                if (ops.get(i).charAt(0) == '-') {
+                    System.out.println("location" + i);
+                    if (total == 0) {
+                        total = Double.parseDouble(ops.get(i - 1)) - Double.parseDouble(ops.get(i + 1));
+                    } else
+                        total = total - Double.parseDouble(ops.get(i + 1));
+                    System.out.println(ops.get(i + 1));
+                    System.out.println("After sub" + total);
+                }
+
+            }
+        }
+        if(ops.contains("/"))
+        {
+            for (int i = 0; i < ops.size(); i++) {
+                if (ops.get(i).charAt(0) == '/') {
+                    System.out.println("location" + i);
+                    if (total == 0) {
+                        total = Double.parseDouble(ops.get(i - 1)) / Double.parseDouble(ops.get(i + 1));
+                    } else
+                        total = total / Double.parseDouble(ops.get(i + 1));
+                    System.out.println(ops.get(i + 1));
+                    System.out.println("After div" + total);
+                }
+            }
+        }
+
+        /*
+        String op = "";
+        for(int i = 0; i < ops.size();i++)
+        {
+           op += ops.get(i);
+           System.out.println("Loop" + op);
+        }
+
+        System.out.println("FINAL" + op);
+*/
+        //System.out.println(temp);
+        return Double.toString(total);
+    }
 }
