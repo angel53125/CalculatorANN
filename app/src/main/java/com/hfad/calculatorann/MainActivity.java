@@ -343,7 +343,7 @@ public class MainActivity extends AppCompatActivity {
                                 size[0] = nums.size();
                                 tvTotal.setText(multiplication(nums));
                                 System.out.println(nums);
-                                operations.add("X");
+                                operations.add("*");
                                 // System.out.println(nums.get((nums.size() + 1)).toString().isEmpty());
                             }
                             else
@@ -435,6 +435,7 @@ public class MainActivity extends AppCompatActivity {
                                     }
 
                                 }
+
                                 System.out.println("Result List" + combineLists);
                                 tvTotal.setText(results(combineLists,nums));
                                 System.out.println(nums);
@@ -442,6 +443,7 @@ public class MainActivity extends AppCompatActivity {
                                 System.out.println(nums.get(operations.size() -1));
                                 System.out.println(nums.get(operations.size() +1));
                                 System.out.println(operations);
+                                Equals(combineLists,nums);
                                 operations.clear();
                                 combineLists.clear();
 
@@ -593,4 +595,43 @@ public class MainActivity extends AppCompatActivity {
         //System.out.println(temp);
         return Double.toString(total);
     }
+
+    public void Equals(ArrayList<String> combined, ArrayList<Double> num)
+    {
+        System.out.println("COmbine size" + combined.size());
+        if ((combined.size()-1) % 2 == 0) {
+            for (int i = 0; i < combined.size() - 1; i++) {
+                System.out.println("Inloop");
+
+                System.out.println("In first if" + i);
+                if (i % 6 == 0) {
+                    combined.add(i, "(");
+                }
+                if ((i % 6 == 4 && i != 0) || i == 4) {
+                    combined.add(i, ")");
+                }
+            }
+            combined.add(")");
+        }
+
+        String number = "";
+
+        for(int i = 0; i < combined.size();i++)
+        {
+            number+= combined.get(i);
+        }
+
+       // double total = Double.parseDouble("(8.0*9.0)*(5.0+2.0)");
+        System.out.println(number);
+       // System.out.println(total);
+        System.out.println(combined);
+
+    }
+
+
+
+
 }
+
+
+
