@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Calculator ANN</string>
+    <string name="app_name">Crappy Calculator ANN</string>
     <string name="zero">0</string>
     <string name="one">1</string>
     <string name="two">2</string>
@@ -18,5 +18,5 @@
     <string name="negPos">+/-</string>
     <string name="decimal">.</string>
     <string name="equal">=</string>
-    <string name="Clear">C</string>
+    <string name="Clear">AC</string>
 </resources>
